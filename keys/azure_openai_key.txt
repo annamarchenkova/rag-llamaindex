@@ -1,0 +1,1 @@
+here goes your azure_openai_key 
