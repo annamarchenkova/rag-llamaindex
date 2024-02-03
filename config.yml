@@ -1,0 +1,15 @@
+azure_openai_key_file: "azure_openai_key.txt"
+azure_openai_api_endpoint: 'https://rag-implementation.openai.azure.com/'
+azure_openai_api_version: '2023-05-15'
+azure_deployment_name: 'gpt-35-turbo'
+azure_llm_model: 'gpt-35-turbo'
+azure_deployment_name_embeddigns: 'embeddings-ada'
+azure_embeddign_model: 'text-embedding-ada-002'
+embedding_mode: 'azureopenai'
+local_embeddings_model_name: ''
+db_collection_name: 'connessi'
+llm_mode: 'azureopenai'
+llm_model_path: None
+accepted_file_extentions: ['pdf', 'txt', 'xlsx']
+chunk_size: 500
+chunk_overlap: 20
