@@ -2,15 +2,6 @@ import logging
 import os
 from llama_index.llms import LlamaCPP, OpenAI, AzureOpenAI
 from llama_index.llms.llama_utils import completion_to_prompt,messages_to_prompt
-
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
-
-AZURE_OPENAI_API_KEY = os.environ.get('AZURE_OPENAI_API_KEY', '')
-AZURE_ENDPOINT = os.environ.get('AZURE_ENDPOINT', '')
-AZURE_API_VERSION = os.environ.get('AZURE_API_VERSION', '')
-AZURE_DEPLOYMENT_NAME = os.environ.get('AZURE_DEPLOYMENT_NAME', '')
-AZURE_LLM_MODEL = os.environ.get('AZURE_LLM_MODEL', '')
-
 logger = logging.getLogger(__name__)
 
 class LLMMain:
@@ -34,9 +25,16 @@ class LLMMain:
                 completion_to_prompt=completion_to_prompt
             )
         elif self.llm_mode == "openai":
+            OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
             self.llm = OpenAI(temperature=0.0, api_key=OPENAI_API_KEY)
             
         elif self.llm_mode == "azureopenai":
+            AZURE_OPENAI_API_KEY = os.environ.get('AZURE_OPENAI_API_KEY', '')
+            AZURE_ENDPOINT = os.environ.get('AZURE_ENDPOINT', '')
+            AZURE_API_VERSION = os.environ.get('AZURE_API_VERSION', '')
+            AZURE_DEPLOYMENT_NAME = os.environ.get('AZURE_DEPLOYMENT_NAME', '')
+            AZURE_LLM_MODEL = os.environ.get('AZURE_LLM_MODEL', '')
+
             self.llm = AzureOpenAI(
                 model=AZURE_LLM_MODEL,
                 deployment_name=AZURE_DEPLOYMENT_NAME,
