@@ -37,28 +37,40 @@ class DatabaseManager:
         self.db_path = db_path
         self.collection_name = collection_name
 
-    def initialize_db(self):
+    def get_db(self):
         logger.info("Initializing the database at path: %s", self.db_path)
         db = chromadb.PersistentClient(path=self.db_path)
         collection = db.get_or_create_collection(self.collection_name)
         return collection
 
 
-class VectorIndexer:
-    def __init__(self, nodes, vector_store, embedding_model, llm_model):
-        self.nodes = nodes
-        self.vector_store = vector_store
-        self.embedding_model = embedding_model
-        self.llm_model = llm_model
+# class VectorIndexer:
+#     def __init__(self, nodes, vector_store, embedding_model, llm_model, indexid, index_path):
+#         self.nodes = nodes
+#         self.vector_store = vector_store
+#         self.embedding_model = embedding_model
+#         self.llm_model = llm_model
+#         self.indexid = indexid
+#         self.index_path = index_path
+#         # self.service_context
 
-    def create_index(self):
-        logger.info("Creating the vector index")
-        storage_context = StorageContext.from_defaults(vector_store=self.vector_store)
-        service_context = ServiceContext.from_defaults(embed_model=self.embedding_model, llm=self.llm_model)
-        return VectorStoreIndex(
-            self.nodes, storage_context=storage_context, service_context=service_context
-        )
-
+#     def get_index(self):
+#         try:
+#             logger.info(f"Load {self.indexid} from local path {self.index_path}")
+#             storage_context = StorageContext.from_defaults(vector_store=self.vector_store,
+#                                                           persist_dir=self.index_path)
+#             index = load_index_from_storage(storage_context=storage_context, index_id=indexid)
+            
+#         except Exception as e:
+#             logger.info("Creating the vector index")
+#             storage_context = StorageContext.from_defaults(vector_store=self.vector_store)
+#             service_context = ServiceContext.from_defaults(embed_model=self.embedding_model, llm=self.llm_model)
+#             index =  VectorStoreIndex(
+#                 self.nodes, storage_context=storage_context, service_context=service_context
+#             )
+#             index.set_index_id(self.indexid)
+#             index.storage_context.persist(persist_dir=self.index_path)
+#         return index
 
 
 
