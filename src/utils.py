@@ -1,11 +1,29 @@
 import os
 import yaml
 import glob
+import pandas as pd
 from project_dirs import PROJECT_DIR, DATA_DIR
-from data_loader import DatabaseManager, DataLoader, VectorIndexer
+from data_loader import DatabaseManager, DataLoader
 from embedding_manager import Embeddings
 from llama_index.vector_stores import ChromaVectorStore
+from llama_index import Response
 
+def append_to_path(new_path):
+    """
+    Append a new path to the PATH environment variable.
+
+    Args:
+    - new_path (str): The path to be appended.
+
+    Returns:
+    - None
+    """
+    # Get the current value of the PATH environment variable
+    current_path = os.environ.get('PATH', '')
+
+    # Append the new path to the current PATH if it's not already there
+    if new_path not in current_path.split(os.pathsep):
+        os.environ['PATH'] = current_path + os.pathsep + new_path
 
 def load_config(cnf_dir=PROJECT_DIR, cnf_name="config.yml"):
     """
@@ -92,5 +110,30 @@ def list_all_filepaths_for_list_of_extentions(
 #         llm_model = 
 #     )
 #     index = indexer.create_index()
+
+# define jupyter display function
+
+def get_eval_df(query: str, response: Response, eval_result: str, display_df=False) -> None:
+    eval_df = pd.DataFrame(
+      {
+          "Query": str(query),
+          "Response": str(response),
+          "Source": response.source_nodes[0].node.get_content()[:500] + "...",
+          "Evaluation Result": eval_result.feedback
+      },
+      index=[0],
+  )
+    
+    if display_df:
+        eval_df = eval_df.style.set_properties(
+      **{
+          "inline-size": "600px",
+          "overflow-wrap": "break-word",
+      },
+      subset=["Response", "Source"]
+  )
+        display(eval_df)
+        
+    return eval_df
 
 
