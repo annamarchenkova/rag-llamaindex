@@ -6,7 +6,9 @@ from llama_index import OpenAIEmbedding
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')import logging
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
+
+import logging
 import os
 from llama_index.embeddings import HuggingFaceEmbedding, AzureOpenAIEmbedding
 from llama_index import OpenAIEmbedding
